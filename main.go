@@ -14,7 +14,9 @@ import (
 func main() {
 	fmt.Println("started")
 
-	dg, err := discordgo.New("Bot " + "NzU5Nzc2NjM4OTg3NjY1NDEw.X3CbIg.MoQOcfKm10YXvtuu72oRV-86ND8")
+	BotToken := os.Getenv("BOT_TOKEN")
+
+	dg, err := discordgo.New("Bot " + BotToken)
 	if err != nil {
 		fmt.Println("errored")
 		fmt.Println(err)
