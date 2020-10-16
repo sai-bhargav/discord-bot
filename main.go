@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -10,7 +11,13 @@ import (
 	"github.com/bwmarrin/discordgo"
 	"github.com/discord-bot/commands"
 	util "github.com/discord-bot/utils"
+	"github.com/gorilla/mux"
 )
+
+// Ping test to prevent Heroku dyno from idling
+type PingResponse struct {
+	Message string
+}
 
 func main() {
 	fmt.Println("started")
@@ -38,7 +45,10 @@ func main() {
 	fmt.Println("chillara bot is now running.  Press CTRL-C to exit.")
 	port := os.Getenv("PORT")
 
-	err = http.ListenAndServe(":"+port, nil)
+	router := mux.NewRouter()
+	router.HandleFunc("/ping", pingTest)
+
+	err = http.ListenAndServe(":"+port, router)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
@@ -88,4 +98,15 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if msgContent == "help" {
 		s.ChannelMessageSend(m.ChannelID, "yem help kavali ra neeku , what are your wants")
 	}
+}
+
+func pingTest(w http.ResponseWriter, r *http.Request) {
+
+	util.Logger("Ping successful")
+
+	data := PingResponse{}
+	data.Message = "Awake and Alive!!!!"
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(data)
 }
