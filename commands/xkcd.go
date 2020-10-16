@@ -31,6 +31,7 @@ func XkcdComics(s *discordgo.Session, m *discordgo.MessageCreate) {
 		return
 	}
 
+	util.Logger(msgContent + "-" + m.Author.Username)
 	msgContent = msgContent[1:]
 
 	if msgContent == "xkcd" {

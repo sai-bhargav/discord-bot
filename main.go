@@ -9,6 +9,7 @@ import (
 
 	"github.com/bwmarrin/discordgo"
 	"github.com/discord-bot/commands"
+	util "github.com/discord-bot/utils"
 )
 
 func main() {
@@ -77,6 +78,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 		return
 	}
 
+	util.Logger(msgContent + "-" + m.Author.Username)
 	msgContent = msgContent[1:]
 
 	if msgContent == "ping" {
