@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"net/http"
 	"os"
-	"os/signal"
 	"strings"
-	"syscall"
 
 	"github.com/bwmarrin/discordgo"
 	"github.com/discord-bot/commands"
@@ -35,11 +35,13 @@ func main() {
 	}
 
 	fmt.Println("chillara bot is now running.  Press CTRL-C to exit.")
-	sc := make(chan os.Signal, 1)
-	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
-	<-sc
+	port := os.Getenv("PORT")
 
-	dg.Close()
+	err = http.ListenAndServe(":"+port, nil)
+	if err != nil {
+		log.Fatal("ListenAndServe: ", err)
+	}
+
 	fmt.Println("Started")
 }
 
