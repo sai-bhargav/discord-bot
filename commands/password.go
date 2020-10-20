@@ -27,7 +27,7 @@ func PwdGenerator(s *discordgo.Session, m *discordgo.MessageCreate) {
 	}
 
 	msgContent := m.Content
-	res := strings.HasPrefix(msgContent, "+")
+	res := strings.HasPrefix(msgContent, "+pwd")
 
 	if !res {
 		return
