@@ -35,13 +35,7 @@ func PwdGenerator(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	util.Logger(msgContent + "-" + m.Author.Username)
 	msgContent = msgContent[1:]
-
-	// Defaults to 10 characters password if length is not specified
-	if msgContent == "pwd" {
-		s.ChannelMessageSend(m.ChannelID, "pwd 10")
-	} else {
-		s.ChannelMessageSend(m.ChannelID, generator(msgContent))
-	}
+	s.ChannelMessageSend(m.ChannelID, generator(msgContent))
 }
 
 func generator(content string) string {
