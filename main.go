@@ -34,6 +34,7 @@ func main() {
 	dg.AddHandler(guildCreate)
 	dg.AddHandler(messageCreate)
 	dg.AddHandler(commands.XkcdComics)
+	dg.AddHandler(commands.PwdGenerator)
 
 	dg.Identify.Intents = discordgo.MakeIntent(discordgo.IntentsGuilds | discordgo.IntentsGuildMessages | discordgo.IntentsGuildVoiceStates)
 
